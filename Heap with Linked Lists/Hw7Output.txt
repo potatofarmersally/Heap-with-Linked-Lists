@@ -1,0 +1,72 @@
+Preliminary tests complete.
+Now performing 20 detailed tests...
+Allocate 5 200 byte blocks and then try to allocate 1 byte - should fail:
+Passed Test 1 - Can't create a block of size 1
+Free a block not allocated and try to allocate more memory - should fail:
+Passed Test 2 - Nothing freed.  Can't create a block of size 1
+Free all memory then allocate 1000 bytes to 1 pointer:
+Passed Test 3 - All memory freed followed by 1000 byte allocation.
+Just freed block 1 (entire heap should now be available).
+Adding a 201 size block???
+Passed Test 4 - Allocated 201 bytes.
+Adding a 100 size block???
+Passed Test 5 - Just created the block of size 100
+Freeing block #2:
+Freeing block #1:
+Allocate 5 200 byte blocks:
+Freeing block 3 and try to allocate 50 bytes...
+Passed Test 6 - Just allocated 50 bytes.
+Freeing block 2 and try to allocate 50 bytes...
+Passed Test 7 - Just allocated 50 bytes.
+Heap is fragmented with 7 blocks, 2 non-contiguous free blocks of 150 bytes each.
+[  200   |50| 150  |50| 150  |  200   |  200   ]
+              Free      Free
+Now freeing block 7 and allocating a block of 151 bytes...
+Passed Test 8 - Just allocated 151 bytes in block 7 with a free block 8.
+Heap is fragmented with 8 blocks, 349 bytes total in three non-contiguous free blocks
+of 150, 150, & 49 bytes respectively.
+[  200   |50| 150  |50| 150  |  200   | 151  |49]
+              Free      Free                  Free
+Trying to allocate a block of 325 bytes (should fail)...
+Passed Test 9 - Could not allocate 325 bytes.
+Freeing block 4 which should contain 50 bytes with 150 bytes in both neighboring
+blocks.  All 3 blocks should coalesce into a single free block of 350 bytes.
+[  200   |50|      350       |  200   | 151  |49]
+                   Free                       Free
+Now allocate a block of 325 bytes (should succeed)...
+[  200   |50|     325     |25|  200   | 151  |49]
+                           Free               Free
+Passed Test 10 - Just allocated 325 bytes.
+Try to allocate a block of 40 bytes (should succeed)...
+[  200   |50|     325     |25|  200   | 151  |40|9]
+                           Free                  Free
+Passed Test 11 - Just allocated 40 bytes.
+Try to allocate a block of 26 bytes (should fail)...
+Passed Test 12 - Could not allocate 26 bytes.
+Try to allocate a block of 25 bytes (should succeed)...
+[  200   |50|     325     |25|  200   | 151  |40|9]
+                                                 Free
+Passed Test 13 - Just allocated 25 bytes.
+Try to allocate a block of 49 bytes (should fail)...
+Passed Test 14 - Could not allocate 49 bytes.
+Free block 7 and try to allocate a block of 49 bytes (should succeed)...
+[  200   |50|     325     |25|  200   | 151  |49]
+Passed Test 15 - Just allocated 49 bytes.
+Heap should be full.  Let's check by trying to allocate 1 byte (should fail)...
+Passed Test 16 - Could not allocate 1 byte.  Heap is full!
+Check coalescing.  Free last 2 blocks and try to allocate 201 bytes (should fail)...
+[  200   |50|     325     |25|  200   |  200   ]
+                                         Free
+Passed Test 17 - Could not allocate 201 bytes after coalescing last 2 blocks.
+Try to allocate 200 bytes (should succeed)...
+[  200   |50|     325     |25|  200   |  200   ]
+Passed Test 18 - Allocated 200 bytes after coalescing last 2 blocks.
+Check coalescing block 2 and block 1 and try to allocate 251 bytes (should fail)...
+[  250   |     325     |25|  200   |  200   ]
+   Free
+Passed Test 19 - Could not allocate 251 bytes after coalescing first 2 blocks.
+Try to allocate 250 bytes (should succeed)...
+[  250   |     325     |25|  200   |  200   ]
+Passed Test 20 - Allocated 250 bytes after coalescing first 2 blocks.
+Detailed Tests Complete.
+Final Grade Following Detailed Tests: 100
